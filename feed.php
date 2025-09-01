@@ -16,14 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'emanamirniazi@gmail.com';       // 🔑 your Gmail
-        $mail->Password   = 'fbvf pufi vnya gccx';         // 🔑 your App Password
+        $mail->Username   = '';       // 🔑 your Gmail
+        $mail->Password   = '';         // 🔑 your App Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
         // Recipients
-        $mail->setFrom('emanamirniazi@gmail.com', 'Feedback Form');
-        $mail->addAddress('emanamirniazi@gmail.com'); // you will receive it here
+        $mail->setFrom('', 'Feedback Form');
+        $mail->addAddress(''); // you will receive it here
 
         // Content
         $mail->isHTML(true);
@@ -37,3 +37,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
