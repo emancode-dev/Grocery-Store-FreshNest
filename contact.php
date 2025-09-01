@@ -20,14 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'emanamirniazi@gmail.com'; 
-        $mail->Password   = 'fbvf pufi vnya gccx';   // App password
+        $mail->Username   = ''; 
+        $mail->Password   = '';   // App password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 $mail->Port = 465;
         // Who sends & who receives
-        $mail->setFrom('emanamirniazi@gmail.com', 'FreshNest Contact Form');
+        $mail->setFrom('', 'FreshNest Contact Form');
         $mail->addReplyTo($email, $name); 
-        $mail->addAddress('emanamirniazi@gmail.com', 'FreshNest Team');
+        $mail->addAddress('', 'FreshNest Team');
 
         // Email content
         $mail->isHTML(true);
@@ -47,3 +47,4 @@ $mail->Port = 465;
     }
 }
 ?>
+
