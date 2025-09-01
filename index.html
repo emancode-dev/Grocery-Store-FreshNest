@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Grocery Store</title>
+    <link rel="stylesheet" href="style.css">
+<style>
+
+
+
+    .account-dropdown {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+    .account-btn {
+      display: flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+    .account-btn:hover {
+      background: #f5f5f5;
+    }
+    .account-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-right: 7px;
+    }
+    .arrow {
+      margin-left: 5px;
+      transition: transform 0.2s;
+      font-size: 16px;
+    }
+    .account-dropdown:hover .arrow {
+      transform: rotate(180deg);
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 110%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      border-radius: 6px;
+      min-width: 120px;
+      z-index: 100;
+      padding: 8px 0;
+    }
+    .account-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .dropdown-menu a:hover {
+      background: #f5f5f5;
+    }
+
+   /* DEAL */
+  
+    body {
+      font-family: 'Nunito', Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0 0 50px 0;
+      color: #222;
+    }
+    .deals-section {
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+      padding: 0 24px;
+    }
+    .deals-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .deals-header h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      color: #263238;
+    }
+    .deals-header .all-deals {
+      color: #7a9cff;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: text-decoration 0.2s;
+    }
+    .deals-header .all-deals:hover {
+      text-decoration: underline;
+    }
+    .deals-list {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 26px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .deal-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px 0 rgba(45,55,66,0.08);
+      width: 270px;
+      min-width: 270px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+      transition: box-shadow 0.18s;
+    }
+    .deal-card:hover {
+      box-shadow: 0 10px 26px 0 rgba(45,55,66,0.15);
+    }
+    .deal-image {
+      width: 100%;
+      height: 170px;
+      border-radius: 14px 14px 0 0;
+      object-fit: cover;
+      background: #f3f3f3;
+      display: block;
+    }
+    .deal-countdown {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: -34px;
+      position: relative;
+      z-index: 2;
+    }
+    .countdown-box {
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 9px 0 rgba(55, 100, 255, 0.13);
+      text-align: center;
+      width: 58px;
+      padding: 6px 0 6px 0;
+      border: 2px solid #d6f5e1;
+      font-weight: 700;
+      color: #1bb67a;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .countdown-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: #788492;
+      margin-top: 2px;
+    }
+    .deal-content {
+      padding: 22px 18px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .deal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #263238;
+      margin: 0 0 7px 0;
+      line-height: 1.3;
+    }
+    .stars {
+      color: #fec02f;
+      font-size: 15px;
+      margin-right: 3px;
+      vertical-align: middle;
+    }
+    .rating {
+      font-size: 14px;
+      margin-left: 4px;
+      color: #555;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+    .by {
+      display: block;
+      font-size: 14px;
+      color: #8ec9a3;
+      margin-top: 3px;
+      margin-bottom: 8px;
+    }
+    .by a {
+      color: #1bb67a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .deal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .price {
+      font-weight: 700;
+      color: #1bb67a;
+      font-size: 20px;
+      margin-right: 8px;
+    }
+    .old-price {
+      color: #788492;
+      font-size: 15px;
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+    .add-btn {
+      background: #e6f8ef;
+      color: #1bb67a;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.17s, color 0.17s;
+    }
+    .add-btn:hover {
+      background: #1bb67a;
+      color: #fff;
+    }
+    .cart-icon {
+      font-size: 16px;
+    }
+    /* Hide scroll bar for horizontal card overflow */
+    .deals-list::-webkit-scrollbar {
+      display: none;
+    }
+    .deals-list {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @media (max-width: 900px) {
+      .deal-card { min-width: 85vw; width: 85vw;}
+    }
+ 
+ /* ////////////////////////// */
+   body {
+      font-family: 'Nunito', Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0 0 40px 0;
+      color: #222;
+    }
+    .categories-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: 35px auto 0 auto;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+    .category-col {
+      background: #fff;
+      border-radius: 8px;
+      width: 270px;
+      min-width: 240px;
+      box-sizing: border-box;
+    }
+    .category-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #263238;
+      margin: 0 0 10px 0;
+      padding: 0 0 5px 0;
+      border-bottom: 2px solid #e7ecef;
+      letter-spacing: 0.01em;
+    }
+    .category-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .category-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .category-item:last-child {
+      border-bottom: none;
+    }
+    .item-img {
+      width: 56px;
+      height: 56px;
+      background: #f3f3f3;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-left: 8px;
+      margin-right: 0;
+      flex-shrink: 0;
+    }
+    .item-details {
+      flex: 1;
+      min-width: 0;
+    }
+    .item-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #263238;
+      margin: 0 0 2px 0;
+      line-height: 1.22;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .stars {
+      color: #fec02f;
+      font-size: 13px;
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+    .rating {
+      font-size: 13px;
+      color: #555;
+      font-weight: 500;
+      margin-left: 2px;
+      vertical-align: middle;
+    }
+    .item-price {
+      font-weight: 700;
+      color: #1bb67a;
+      font-size: 17px;
+      margin-right: 8px;
+    }
+    .item-oldprice {
+      color: #788492;
+      font-size: 13px;
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+    .price-row {
+      margin-top: 4px;
+    }
+    @media (max-width: 1000px) {
+      .categories-row { flex-wrap: wrap; }
+      .category-col { width: 47vw; min-width: 220px;}
+    }
+    @media (max-width: 700px) {
+      .categories-row { flex-direction: column; gap: 18px;}
+      .category-col { width: 98vw; min-width: 0;}
+    }
+
+
+  </style>
+</head>
+<body>
+<!-- Top Header Links (About Us, My Account, Wishlist, Order Tracking, Deals, Support, Language, Currency) -->
+<div class="top-header-links">
+    <div class="links-left">
+        <a href="#">Wishlist</a>
+        <span>|</span>
+        <a href="#">Order Tracking</a>
+    </div>
+    <div class="links-center">
+        <span>Supper Value Deals - Save more with coupons</span>
+    </div>
+    <div class="links-right">
+        <span>Need help? Call Us:<span class="hotline">+ 1800 700</span></span>
+        <span>|</span>
+        <a href="#">English <span class="arrow">&#9662;</span></a>
+        <span>|</span>
+        <a href="#">USD <span class="arrow">&#9662;</span></a>
+    </div>
+</div>
+
+<!-- Main Top Bar -->
+<div class="main-top-bar">
+    <div class="main-logo">
+        <img src="images/main/logo2.png" alt="Nest Logo">
+        <div class="logo-text">
+            <span class="logo-brand">FRESH</span>
+            <span class="logo-sub">NEST GROCERY</span>
+        </div>
+    </div>
+    <div class="main-search-location">
+        <form class="search-bar">
+            <select>
+                <option>All Categories</option>
+                <option>Fruits</option>
+                <option>Vegetables</option>
+                <option>Dairy</option>
+                <option>Bakery</option>
+                <option>Masala</option>
+            </select>
+            <input type="text" placeholder="Search for items...">
+                <img src="https://img.icons8.com/ios-filled/24/000000/search--v1.png" alt="Search">
+            </button>
+        </form>
+        <button class="location-btn">
+            <img src="https://img.icons8.com/ios-filled/20/000000/marker.png" alt="Location" />
+            Your Location <span class="arrow">&#9662;</span>
+        </button>
+    </div>
+     <div class="main-icons">
+        <div class="icon-group">
+            <a href="#" class="icon-link">
+                <span class="icon-badge">
+                    <img src="https://img.icons8.com/ios-filled/32/000000/compare.png" alt="Compare">
+                    <span class="badge">3</span>
+                </span>
+                <span class="icon-label">Compare</span>
+            </a>
+            <a href="#" class="icon-link">
+                <span class="icon-badge">
+                    <img src="https://img.icons8.com/ios-filled/32/000000/like--v1.png" alt="Wishlist">
+                    <span class="badge">6</span>
+                </span>
+                <span class="icon-label">Wishlist</span>
+            </a>
+            <a href="cart.php" class="icon-link">
+                <span class="icon-badge">
+                    <img src="https://img.icons8.com/ios-filled/32/000000/shopping-cart.png" alt="Cart">
+                    <span class="badge">2</span>
+                </span>
+                <span class="icon-label">Cart</span>
+            </a>
+            <div class="account-dropdown">
+            <div class="account-btn">
+              <span class="account-icon">&#128100;</span>
+                Account
+              <span class="arrow">&#9662;</span>
+            </div>
+            <div class="dropdown-menu">
+                <a href="login.html">Login</a>
+                <a href="registration.html">Register</a>
+             </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!--  header/navbar and main content -->
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">Vendor</a>
+            <a href="about.html">Pages</a>
+            <a href="blog.html">Blog</a>
+            <a href="cart.php">Cart</a>
+        </nav>
+    </header>
+    <br>
+       <!-- Place this after your navbar (after <header>, before <main>) -->
+   <div class="banner-slider">
+    <div class="banner-slide active">
+        <img src="b1.png" />
+        <button class="banner-btn prev-btn" onclick="showBanner(-1)" aria-label="Previous">&#10094;</button>
+        <button class="banner-btn next-btn" onclick="showBanner(1)" aria-label="Next">&#10095;</button>
+    </div>
+    <div class="banner-slide">
+        <img src="banner.png" alt="Second banner" />
+        <button class="banner-btn prev-btn" onclick="showBanner(-1)" aria-label="Previous">&#10094;</button>
+        <button class="banner-btn next-btn" onclick="showBanner(1)" aria-label="Next">&#10095;</button>
+    </div>
+    <div class="banner-dots">
+        <span class="dot active" onclick="goToBanner(0)"></span>
+        <span class="dot" onclick="goToBanner(1)"></span>
+    </div>
+</div>
+
+<script>
+let currentBanner = 0;
+function updateBannerSlider() {
+    const slides = document.querySelectorAll('.banner-slide');
+    const dots = document.querySelectorAll('.banner-dots .dot');
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentBanner);
+    });
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentBanner);
+    });
+}
+function showBanner(n) {
+    const slides = document.querySelectorAll('.banner-slide');
+    currentBanner += n;
+    if (currentBanner < 0) currentBanner = slides.length - 1;
+    if (currentBanner >= slides.length) currentBanner = 0;
+    updateBannerSlider();
+}
+function goToBanner(n) {
+    currentBanner = n;
+    updateBannerSlider();
+}
+document.addEventListener('DOMContentLoaded', updateBannerSlider);
+</script>
+        
+        <main>
+        <h2>Categories</h2>
+        <div class="categories-container">
+            <div class="category-card fruits">
+                <img src="https://img.icons8.com/color/96/000000/apple.png" alt="Fruit Logo" />
+                <span>Fruits</span>
+            </div>
+            <div class="category-card vegetables">
+                <img src="https://img.icons8.com/color/96/000000/broccoli.png" alt="Vegetable Logo" />
+                <span>Vegetables</span>
+            </div>
+            <div class="category-card dairy">
+                <img src="https://img.icons8.com/color/96/000000/milk-bottle.png" alt="Dairy Logo" />
+                <span>Dairy</span>
+            </div>
+            <div class="category-card bakery">
+                <img src="https://img.icons8.com/color/96/000000/bread.png" alt="Bakery Logo" />
+                <span>Bakery</span>
+            </div>
+           <div class="category-card masala">
+            <div class="category-img-wrapper">
+            <img src="masala1.png" alt="Masala Logo" /> </div>
+              <span>Masala</span>
+           </div>
+        </div>
+       <br>
+       <div class="product-cards-container">
+  <div class="product-card card1">
+    <div class="card-content">
+      <h3>Everyday Fresh &amp; Clean with Our Products</h3>
+      <a href="#" class="shop-btn">Shop Now <span>&rarr;</span></a>
+    </div>
+    <img src="onion.png" alt="Onions" class="card-img" />
+  </div>
+  <div class="product-card card2">
+    <div class="card-content">
+      <h3>Make your Breakfast Healthy and Easy</h3>
+      <a href="#" class="shop-btn">Shop Now <span>&rarr;</span></a>
+    </div>
+    <img src="breakfast.png" alt="Strawberry Juice" class="card-img" />
+  </div>
+  <div class="product-card card3">
+    <div class="card-content">
+      <h3>The best Organic Products Online</h3>
+      <a href="#" class="shop-btn">Shop Now <span>&rarr;</span></a>
+    </div>
+    <img src="bucket.png" alt="Vegetable Basket" class="card-img" />
+  </div>
+</div>
+
+        <h2>Products</h2>
+        <form action="cart.php" method="post" class="products-form">
+
+           <!-- Fruits Section -->
+    <section class="product-section">
+    <h3>Fruits</h3>
+    <div class="products">
+        <div class="product">
+            <img src="images/fruits/apple.png" alt="Apple">
+            <h3>Apple</h3>
+            <p>$2.00 / kg</p>
+            <input type="hidden" name="product[]" value="Apple">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/fruits/banana.jpg" alt="Banana">
+            <h3>Banana</h3>
+            <p>$1.20 / kg</p>
+            <input type="hidden" name="product[]" value="Banana">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/fruits/pineapple.png" alt="Pineapple">
+            <h3>Pineapple</h3>
+            <p>$3.00 / kg</p>
+            <input type="hidden" name="product[]" value="Pineapple">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/fruits/gauva.png" alt="Guava">
+            <h3>Guava</h3>
+            <p>$2.50 / kg</p>
+            <input type="hidden" name="product[]" value="Guava">s
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/fruits/mango.png" alt="Mango">
+            <h3>Mango</h3>
+            <p>$4.00 / kg</p>
+            <input type="hidden" name="product[]" value="Mango">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/fruits/orange.png" alt="Orange">
+            <h3>Orange</h3>
+            <p>$2.80 / kg</p>
+            <input type="hidden" name="product[]" value="Orange">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+         <div class="product">
+            <img src="images/fruits/papaya.png" alt="papaya">
+            <h3>Papaya</h3>
+            <p>$5.00/ kg</p>
+            <input type="hidden" name="product[]" value="papaya">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+         <div class="product">
+            <img src="images/fruits/watermelon.png" alt="Watermelon">
+            <h3>Watermelon</h3>
+            <p>$90 / kg</p>
+            <input type="hidden" name="product[]" value="Watermelon">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+         <div class="product">
+            <img src="images/fruits/bluebarry.png" alt="Blueberries">
+            <h3>Blueberries</h3>
+            <p>$65 / kg</p>
+            <input type="hidden" name="product[]" value="Blueberries">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+         <div class="product">
+            <img src="images/fruits/Strawbarry.png" alt="Strawberries">
+            <h3>Strawberries</h3>
+            <p>$100/ kg</p>
+            <input type="hidden" name="product[]" value="Strawberries">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+
+    </div>
+</section>
+
+             <!-- Vegetable Section -->
+            <section class="product-section">
+                <h3>Vegetables</h3>
+                <div class="products">
+                    <div class="product">
+                        <img src="images/veges/kad.png" alt="Bread">
+                        <h3>Pumpkin</h3>
+                        <p>$5.50 / kg</p>
+                        <input type="hidden" name="product[]" value="Pumpkin">
+                        <input type="number" name="qty[]" min="0" value="0">
+                    </div>
+                    <div class="product">
+                        <img src="images/veges/bagen.png" alt="Bread">
+                        <h3>Bringel</h3>
+                        <p>$5.50 / kg</p>
+                        <input type="hidden" name="product[]" value="Bringel">
+                        <input type="number" name="qty[]" min="0" value="0">
+                    </div>
+                    <div class="product">
+                        <img src="images/veges/potato.png" alt="Bread">
+                        <h3>Potato</h3>
+                        <p>$1.50 / kg</p>
+                        <input type="hidden" name="product[]" value="Potato">
+                        <input type="number" name="qty[]" min="0" value="0">
+                    </div>
+                    <div class="product">
+                        <img src="images/veges/tomato.png" alt="Bread">
+                        <h3>Tomato</h3>
+                        <p>$3.50 / kg</p>
+                        <input type="hidden" name="product[]" value="Tomato">
+                        <input type="number" name="qty[]" min="0" value="0">
+                    </div>
+                    <div class="product">
+                        <img src="images/veges/cabag.png" alt="Cabbage">
+                        <h3>Cabbage</h3>
+                        <p>$2.50 / kg</p>
+                        <input type="hidden" name="product[]" value="Cabbage">
+                        <input type="number" name="qty[]" min="0" value="0">
+                    </div>
+                    
+                    
+                </div>
+            </section>
+
+<!-- Dairy Section -->
+<section class="product-section">
+    <h3>Dairy</h3>
+    <div class="products">
+        <div class="product">
+            <img src="images/dairy/milk.jpg" alt="Milk">
+            <h3>Milk</h3>
+            <p>$1.50 / L</p>
+            <input type="hidden" name="product[]" value="Milk">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/dairy/eggs.png" alt="Eggs">
+            <h3>Eggs</h3>
+            <p>$3.00 / dozen</p>
+            <input type="hidden" name="product[]" value="Eggs">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/dairy/butter.png" alt="Butter">
+            <h3>Butter</h3>
+            <p>$4.50 / pack</p>
+            <input type="hidden" name="product[]" value="Butter">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/dairy/cheeze.png" alt="Cheese">
+            <h3>Cheese</h3>
+            <p>$5.00 / pack</p>
+            <input type="hidden" name="product[]" value="Cheese">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/dairy/yog.png" alt="Yogurt">
+            <h3>Yogurt</h3>
+            <p>$2.50 / cup</p>
+            <input type="hidden" name="product[]" value="Yogurt">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        
+        
+    </div>
+</section>
+
+
+<!-- Bakery Section -->
+<section class="product-section">
+    <h3>Bakery</h3>
+    <div class="products">
+        <div class="product">
+            <img src="images/bakery/bread.jpg" alt="Bread">
+            <h3>Bread</h3>
+            <p>$1.50 / loaf</p>
+            <input type="hidden" name="product[]" value="Bread">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/bakery/cake.jpg" alt="Cake">
+            <h3>Cake</h3>
+            <p>$5.00 / piece</p>
+            <input type="hidden" name="product[]" value="Cake">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/bakery/muffins.png" alt="Muffins">
+            <h3>Muffins</h3>
+            <p>$2.00 / piece</p>
+            <input type="hidden" name="product[]" value="Muffins">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/bakery/cook.png" alt="Cookies">
+            <h3>Cookies</h3>
+            <p>$1.50 / pack</p>
+            <input type="hidden" name="product[]" value="Cookies">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/bakery/buns.png" alt="Buns">
+            <h3>Buns</h3>
+            <p>$1.20 / pack</p>
+            <input type="hidden" name="product[]" value="Buns">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>  
+    </div>
+</section>
+
+
+<!-- Masala Section -->
+<section class="product-section">
+    <h3>Masala</h3>
+    <div class="products">
+        <div class="product">
+            <img src="images/masala/redchilli.png" alt="Red Chili Powder">
+            <h3>Red Chili Powder</h3>
+            <p>$2.50 / pack</p>
+            <input type="hidden" name="product[]" value="Red Chili Powder">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/masala/garlic.png" alt="Garlic Powder">
+            <h3>Garlic Powder</h3>
+            <p>$3.00 / pack</p>
+            <input type="hidden" name="product[]" value="Garlic Powder">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/masala/haldi.png" alt="Ginger Powder">
+            <h3>Turmeric Powder</h3>
+            <p>$3.50 / pack</p>
+            <input type="hidden" name="product[]" value="Ginger Powder">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/masala/sonf.jpg" alt="Saunf Powder">
+            <h3>Fennel Powder</h3>
+            <p>$2.80 / pack</p>
+            <input type="hidden" name="product[]" value="Saunf Powder">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        <div class="product">
+            <img src="images/masala/onion.png" alt="Onion Powder">
+            <h3>Onion Powder</h3>
+            <p>$3.20 / pack</p>
+            <input type="hidden" name="product[]" value="Onion Powder">
+            <input type="number" name="qty[]" min="0" value="0">
+        </div>
+        
+    </div>
+</section>
+         <button type="submit">Add to Cart</button>
+        </form>
+
+
+
+<!-- //////////////////////////////////////////////////////// -->
+  <div class="categories-row">
+    <!-- Top Selling -->
+    <div class="category-col">
+      <div class="category-title">Top Selling</div>
+      <ul class="category-list">
+        <li class="category-item">
+          <img class="item-img" src="images/3last/cream.png" alt="cream">
+          <div class="item-details">
+            <div class="item-title">Nestle Original Coffee-Mate Coffee Creamer</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$32.85</span>
+              <span class="item-oldprice">$35.8</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/broc.png" alt="brock">
+          <div class="item-details">
+            <div class="item-title">Green Giant Fresh Broccoli Florets</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$75.5</span>
+              <span class="item-oldprice">$100</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/straw.png" alt="orange juice">
+          <div class="item-details">
+            <div class="item-title">Driscoll's Fresh Strawberries</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$150</span>
+              <span class="item-oldprice">$220</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Trending Products -->
+    <div class="category-col">
+      <div class="category-title">Trending Products</div>
+      <ul class="category-list">
+        <li class="category-item">
+          <img class="item-img" src="images/3last/egg.png" alt="egg">
+          <div class="item-details">
+            <div class="item-title">Organic Cage-Free Grade A Large Brown Eggs</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$45.5</span>
+              <span class="item-oldprice">$50.0</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/seed.png" alt="seed">
+          <div class="item-details">
+            <div class="item-title">Seeds of Change Organic Quinoa, Brown, &amp; Red Rice</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$23.8</span>
+              <span class="item-oldprice">$30.0</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/coffee.png" alt="coffee">
+          <div class="item-details">
+            <div class="item-title">Naturally Flavored Cinnamon Vanilla Light Roast Coffee</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$58.0</span>
+              <span class="item-oldprice">$60.7</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Recently Added -->
+    <div class="category-col">
+      <div class="category-title">Recently added</div>
+      <ul class="category-list">
+        <li class="category-item">
+          <img class="item-img" src="https://img.icons8.com/color/96/000000/bread.png" alt="bread">
+          <div class="item-details">
+            <div class="item-title">Pepperidge Farm Farmhouse Hearty White Bread</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$32.85</span>
+              <span class="item-oldprice">$35.8</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/berry.png" alt="berry">
+          <div class="item-details">
+            <div class="item-title">Organic Frozen Triple Berry Blend</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$75.9</span>
+              <span class="item-oldprice">$80.4</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/bread.png" alt="bread">
+          <div class="item-details">
+            <div class="item-title">Oroweat Country Buttermilk Bread</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$80.0</span>
+              <span class="item-oldprice">$90.7</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Top Rated -->
+    <div class="category-col">
+      <div class="category-title">Top Rated</div>
+      <ul class="category-list">
+        <li class="category-item">
+          <img class="item-img" src="images/3last/wing.png" alt="Wings">
+          <div class="item-details">
+            <div class="item-title">Foster Farms Takeout Crispy Classic Buffalo Wings</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$40.9</span>
+              <span class="item-oldprice">$45.5</span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/corn.png" alt="corn">
+          <div class="item-details">
+            <div class="item-title">Angie's Boomchickapop Sweet &amp; Salty Kettle Corn</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$30</span>
+              <span class="item-oldprice">$39/span>
+            </div>
+          </div>
+        </li>
+        <li class="category-item">
+          <img class="item-img" src="images/3last/meat.png" alt="meat">
+          <div class="item-details">
+            <div class="item-title">All Natural Italian-Style Chicken Meatballs</div>
+            <span>
+              <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              <span class="rating">(4.0)</span>
+            </span>
+            <div class="price-row">
+              <span class="item-price">$32.85</span>
+              <span class="item-oldprice">$35.8</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- /////////////////////////////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+<!-- -->
+<section class="deals-section">
+    <div class="deals-header">
+      <h2>Deals Of The Day</h2>
+      <a class="all-deals" href="#">
+        All Deals <span style="font-size:15px;">&#8594;</span>
+      </a>
+    </div>
+    <div class="deals-list">
+      <!-- Deal 1 -->
+      <div class="deal-card">
+        <img class="deal-image" src="images/slast/seed.png" alt="Seeds of Change">
+        <div class="deal-countdown">
+          <div class="countdown-box">00<span class="countdown-label">Days</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Hours</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Mins</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Sec</span></div>
+        </div>
+        <div class="deal-content">
+          <div class="deal-title">Seeds of Change Organic Quinoa, Brown, &amp; Red Rice</div>
+          <span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="rating">(4.0)</span>
+          </span>
+          <span class="by">By <a href="#">NestFood</a></span>
+          <div class="deal-footer">
+            <span>
+              <span class="price">$32.85</span>
+              <span class="old-price">$35.8</span>
+            </span>
+            <button class="add-btn"><span class="cart-icon">&#128722;</span> Add</button>
+          </div>
+        </div>
+      </div>
+      <!-- Deal 2 -->
+      <div class="deal-card">
+        <img class="deal-image" src="images/slast/glut.png" alt="Perdue Simply Smart">
+        <div class="deal-countdown">
+          <div class="countdown-box">247<span class="countdown-label">Days</span></div>
+          <div class="countdown-box">16<span class="countdown-label">Hours</span></div>
+          <div class="countdown-box">51<span class="countdown-label">Mins</span></div>
+          <div class="countdown-box">39<span class="countdown-label">Sec</span></div>
+        </div>
+        <div class="deal-content">
+          <div class="deal-title">Perdue Simply Smart Organics Gluten Free</div>
+          <span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="rating">(4.0)</span>
+          </span>
+          <span class="by">By <a href="#">Old El Paso</a></span>
+          <div class="deal-footer">
+            <span>
+              <span class="price">$24.85</span>
+              <span class="old-price">$26.8</span>
+            </span>
+            <button class="add-btn"><span class="cart-icon">&#128722;</span> Add</button>
+          </div>
+        </div>
+      </div>
+      <!-- Deal 3 -->
+      <div class="deal-card">
+        <img class="deal-image" src="images/slast/mush.png" alt="Signature Wood-Fired">
+        <div class="deal-countdown">
+          <div class="countdown-box">581<span class="countdown-label">Days</span></div>
+          <div class="countdown-box">16<span class="countdown-label">Hours</span></div>
+          <div class="countdown-box">51<span class="countdown-label">Mins</span></div>
+          <div class="countdown-box">39<span class="countdown-label">Sec</span></div>
+        </div>
+        <div class="deal-content">
+          <div class="deal-title">Signature Wood-Fired Mushroom and Caramelized</div>
+          <span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+            <span class="rating">(3.0)</span>
+          </span>
+          <span class="by">By <a href="#">Progresso</a></span>
+          <div class="deal-footer">
+            <span>
+              <span class="price">$12.85</span>
+              <span class="old-price">$13.8</span>
+            </span>
+            <button class="add-btn"><span class="cart-icon">&#128722;</span> Add</button>
+          </div>
+        </div>
+      </div>
+      <!-- Deal 4 -->
+      <div class="deal-card">
+        <img class="deal-image" src="images/slast/lemon.png" alt="Simply Lemonade">
+        <div class="deal-countdown">
+          <div class="countdown-box">00<span class="countdown-label">Days</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Hours</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Mins</span></div>
+          <div class="countdown-box">00<span class="countdown-label">Sec</span></div>
+        </div>
+        <div class="deal-content">
+          <div class="deal-title">Simply Lemonade with Raspberry Juice</div>
+          <span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+            <span class="rating">(3.0)</span>
+          </span>
+          <span class="by">By <a href="#">Yoplait</a></span>
+          <div class="deal-footer">
+            <span>
+              <span class="price">$15.85</span>
+              <span class="old-price">$16.8</span>
+            </span>
+            <button class="add-btn"><span class="cart-icon">&#128722;</span> Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+<div class="hero-section">
+  <div class="hero-content">
+    <h1>Stay home &amp; get your daily<br>needs from our shop</h1>
+    <p class="subtitle">
+      Start Your Daily Shopping with <a href="#" class="nest-link">Nest Mart</a>
+    </p>
+    <form class="subscribe-form">
+      <span class="email-icon">
+        <svg width="20" height="20" fill="none"><path d="M2 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5Zm2-.5a.5.5 0 0 0-.5.5v.217l6.01 4.8a1 1 0 0 0 1.23 0l6.01-4.8V5a.5.5 0 0 0-.5-.5H4Zm13 2.383-5.323 4.256a3 3 0 0 1-3.354 0L3 6.883V15a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V6.883Z" fill="#b7b7b7"/></svg>
+      </span>
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  <div class="hero-img">
+    <img src="n1.png" alt="Delivery with vegetables" />
+  </div>
+</div>
+
+<div class="features-row">
+  <div class="feature-card">
+    <img src="images/last/1.png" alt="Best prices & offers icon">
+    <div>
+      <h4>Best prices &amp; offers</h4>
+      <span>Orders $50 or more</span>
+    </div>
+  </div>
+  <div class="feature-card">
+    <img src="images/last/2.png" alt="Free delivery icon">
+    <div>
+      <h4>Free delivery</h4>
+      <span>24/7 amazing services</span>
+    </div>
+  </div>
+  <div class="feature-card">
+    <img src="images/last/3.png" alt="Great daily deal icon">
+    <div>
+      <h4>Great daily deal</h4>
+      <span>When you sign up</span>
+    </div>
+  </div>
+  <div class="feature-card">
+    <img src="images/last/4.png" alt="Wide assortment icon">
+    <div>
+      <h4>Wide assortment</h4>
+      <span>Mega Discounts</span>
+    </div>
+  </div>
+  <div class="feature-card">
+    <img src="images/last/5.png" alt="Easy returns icon">
+    <div>
+      <h4>Easy returns</h4>
+      <span>Within 30 days</span>
+    </div>
+  </div>
+</div>
+    </main>
+    <footer>
+    <div class="footer-container">
+        <div class="footer-right">
+            <h3>FreshNest</h3>
+      <p style="color: white;">Healthy Choices, Happy Nest!!</p>
+      <p style="color: white;"><strong>Address:</strong> Islamabad</p>
+      <p style="color: white;"><strong>Call Us:</strong> +1 540-025-124553</p>
+      <p style="color: white;"><strong>Email:</strong> support@freshnest.com</p>
+      <p style="color: white;"><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        </div>
+        <div class="footer-middle">
+            <h3>Contact Us</h3>
+            <form class="contact-form" method="POST" action="contact.php" id="contact">
+                <input type="text" placeholder="Your Name" name="name">
+                <input type="email" placeholder="Your Email" name="email">
+                <textarea placeholder="Your Message" name="message"></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="footer-right">
+            <h3>Feedback</h3>
+            <p style="color: white;">We’d love your thoughts because your feedback truly matters. Help us serve you better by sharing your experience with us.</p>
+            <form class="feedback-form" method="POST" action="feed.php">
+                <textarea placeholder="Your Feedback" name="message"></textarea>
+                <button type="submit">Submit</button>
+                <p style="color: green;">
+        <?php if (!empty($messageSent)) echo $messageSent; ?>
+    </p>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+    <p style="color: white;">© 2025 FreshNest. All Rights Reserved.</p>
+  </div>
+  
+</footer>
+</body>
+</html>
